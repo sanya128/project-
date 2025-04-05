@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoCircle - Secure Mental Health Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --sos: #ff0000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        .sos-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--sos);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(255, 0, 0, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .sos-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+
+        .sos-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sos-modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        .sos-modal h2 {
+            color: var(--sos);
+            margin-bottom: 20px;
+        }
+
+        .sos-modal p {
+            margin-bottom: 30px;
+        }
+
+        .sos-modal-btn {
+            background-color: var(--sos);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sos-modal-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .hero {
+            background: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e84393;
+            transform: translateY(-3px);
+        }
+
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .feature-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .feature-card:hover .feature-img img {
+            transform: scale(1.1);
+        }
+
+        .feature-content {
+            padding: 25px;
+        }
+
+        .feature-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .feature-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .feature-link {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .feature-link:hover {
+            color: var(--accent);
+        }
+
+        .feature-link i {
+            margin-left: 5px;
+        }
+
+        .peer-pods {
+            background-color: #f1f2f6;
+            padding: 80px 0;
+        }
+
+        .pods-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .pod-card {
+            background-color: white;
+            border-radius: 10px;
+            width: 350px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .pod-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pod-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 30px;
+        }
+
+        .pod-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .pod-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .whisper-boxes {
+            padding: 80px 0;
+        }
+
+        .whisper-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .whisper-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .whisper-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .whisper-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .whisper-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .whisper-content {
+            margin-bottom: 20px;
+            color: #333;
+            font-style: italic;
+        }
+
+        .whisper-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .whisper-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .whisper-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .whisper-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .questboards {
+            background-color: #f1f2f6;
+            padding: 80px 0;
+        }
+
+        .quest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .quest-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .quest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .quest-img {
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .quest-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .quest-content {
+            padding: 20px;
+        }
+
+        .quest-content h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .quest-content p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .quest-progress {
+            height: 5px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success);
+            width: 30%;
+        }
+
+        .quest-btn {
+            display: block;
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 0;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .quest-btn:hover {
+            background-color: #5649d1;
+        }
+
+        .emergency-tools {
+            padding: 80px 0;
+        }
+
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .tool-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .tool-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .tool-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .tool-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .tool-btn:hover {
+            background-color: #5649d1;
+        }
+
+        .therapists {
+            background-color: #f1f2f6;
+            padding: 80px 0;
+        }
+
+        .therapist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .therapist-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .therapist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .therapist-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .therapist-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .therapist-card:hover .therapist-img img {
+            transform: scale(1.1);
+        }
+
+        .therapist-content {
+            padding: 20px;
+        }
+
+        .therapist-content h3 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .therapist-specialty {
+            color: var(--accent);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .therapist-bio {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .therapist-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .therapist-btn {
+            display: block;
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 0;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .therapist-btn:hover {
+            background-color: #5649d1;
+        }
+
+        .privacy {
+            padding: 80px 0;
+        }
+
+        .privacy-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .privacy-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .privacy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .privacy-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .privacy-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .privacy-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 10px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-comment-dots"></i> EchoCircle
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pods">Peer Pods</a></li>
+                        <li><a href="#whisper">Whisper Boxes</a></li>
+                        <li><a href="#quests">Questboards</a></li>
+                        <li><a href="#therapists">Find Therapists</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>A Safe Space for Your Mental Health</h1>
+                <p>Anonymous, encrypted peer support and self-help tools without surveillance or algorithms.</p>
+                <a href="#" class="btn">Join Our Community</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="sos-btn" id="sosBtn">
+        SOS
+    </div>
+
+    <div class="sos-modal" id="sosModal">
+        <div class="sos-modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>Emergency Assistance</h2>
+            <p>We're here to help. Connecting you to your emergency contact and providing immediate support resources.</p>
+            <button class="sos-modal-btn" id="callEmergency">Call Emergency Contact</button>
+            <button class="sos-modal-btn" id="panicHelp">Panic Attack Help</button>
+            <button class="sos-modal-btn" id="cancelSos">Cancel</button>
+        </div>
+    </div>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your Private Support System</h2>
+                <p>EchoCircle offers a range of tools designed to provide genuine support while respecting your privacy and boundaries.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Peer Support">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Peer Support Pods</h3>
+                        <p>Join temporary, anonymous groups of 5-7 people for 14-day cycles of mutual support and understanding.</p>
+                        <a href="#pods" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Whisper Boxes">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Whisper Boxes</h3>
+                        <p>Share your thoughts and feelings anonymously and receive supportive responses from others.</p>
+                        <a href="#whisper" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Questboards">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Questboards</h3>
+                        <p>Structured self-help paths for managing specific challenges like anxiety, depression, or building confidence.</p>
+                        <a href="#quests" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="peer-pods" id="pods">
+        <div class="container">
+            <div class="section-title">
+                <h2>Rotational Peer Pods</h2>
+                <p>Temporary, anonymous support groups that reset every 14 days to prevent emotional dependency while providing meaningful connection.</p>
+            </div>
+            <div class="pods-container">
+                <div class="pod-card">
+                    <div class="pod-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Small Groups</h3>
+                    <p>Join intimate groups of 5-7 people facing similar challenges for genuine, focused support.</p>
+                    <a href="#" class="btn">Join a Pod</a>
+                </div>
+                <div class="pod-card">
+                    <div class="pod-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>14-Day Cycles</h3>
+                    <p>Each pod lasts for two weeks, then resets to maintain healthy boundaries and prevent burnout.</p>
+                    <a href="#" class="btn">How It Works</a>
+                </div>
+                <div class="pod-card">
+                    <div class="pod-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Secure & Anonymous</h3>
+                    <p>End-to-end encrypted conversations with nicknames and avatars to protect your identity.</p>
+                    <a href="#" class="btn">Privacy Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="whisper-boxes" id="whisper">
+        <div class="container">
+            <div class="section-title">
+                <h2>Whisper Boxes</h2>
+                <p>An anonymous space to share your thoughts and feelings without fear of judgment or exposure.</p>
+            </div>
+            <div class="whisper-container">
+                <div class="whisper-card">
+                    <div class="whisper-header">
+                        <div class="whisper-avatar">A</div>
+                        <div>
+                            <h4>Anonymous</h4>
+                            <small>2 hours ago</small>
+                        </div>
+                    </div>
+                    <div class="whisper-content">
+                        "I miss someone I haven't spoken to in years. And it hurts every day."
+                    </div>
+                    <div class="whisper-stats">
+                        <span>37 Echos</span>
+                        <span>14 Holds</span>
+                    </div>
+                    <div class="whisper-actions">
+                        <button class="whisper-btn">Echo</button>
+                        <button class="whisper-btn">Hold</button>
+                    </div>
+                </div>
+                <div class="whisper-card">
+                    <div class="whisper-header">
+                        <div class="whisper-avatar">S</div>
+                        <div>
+                            <h4>Anonymous</h4>
+                            <small>1 day ago</small>
+                        </div>
+                    </div>
+                    <div class="whisper-content">
+                        "Today I got out of bed, showered, and ate a proper meal. It's been weeks since I've done all three."
+                    </div>
+                    <div class="whisper-stats">
+                        <span>42 Echos</span>
+                        <span>28 Holds</span>
+                    </div>
+                    <div class="whisper-actions">
+                        <button class="whisper-btn">Echo</button>
+                        <button class="whisper-btn">Hold</button>
+                    </div>
+                </div>
+                <div class="whisper-card">
+                    <div class="whisper-header">
+                        <div class="whisper-avatar">M</div>
+                        <div>
+                            <h4>Anonymous</h4>
+                            <small>3 days ago</small>
+                        </div>
+                    </div>
+                    <div class="whisper-content">
+                        "Therapy is helping but I still have days where everything feels hopeless. Does it get better?"
+                    </div>
+                    <div class="whisper-stats">
+                        <span>65 Echos</span>
+                        <span>32 Holds</span>
+                    </div>
+                    <div class="whisper-actions">
+                        <button class="whisper-btn">Echo</button>
+                        <button class="whisper-btn">Hold</button>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#" class="btn">View More Whispers</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="questboards" id="quests">
+        <div class="container">
+            <div class="section-title">
+                <h2>Questboards</h2>
+                <p>Structured self-help paths to guide your personal growth journey without algorithms or tracking.</p>
+            </div>
+            <div class="quest-grid">
+                <div class="quest-card">
+                    <div class="quest-img">
+                        <img src="https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Manage Anxiety">
+                    </div>
+                    <div class="quest-content">
+                        <h3>Manage Panic Attacks</h3>
+                        <p>A 7-day journey to understand and cope with anxiety and panic attacks.</p>
+                        <div class="quest-progress">
+                            <div class="progress-bar" style="width: 30%;"></div>
+                        </div>
+                        <a href="#" class="quest-btn">Continue Quest</a>
+                    </div>
+                </div>
+                <div class="quest-card">
+                    <div class="quest-img">
+                        <img src="https://images.unsplash.com/photo-1494172961521-33799ddd43a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Build Confidence">
+                    </div>
+                    <div class="quest-content">
+                        <h3>Build Confidence</h3>
+                        <p>14 daily exercises to improve self-esteem and assertiveness.</p>
+                        <div class="quest-progress">
+                            <div class="progress-bar" style="width: 10%;"></div>
+                        </div>
+                        <a href="#" class="quest-btn">Start Quest</a>
+                    </div>
+                </div>
+                <div class="quest-card">
+                    <div class="quest-img">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Better Sleep">
+                    </div>
+                    <div class="quest-content">
+                        <h3>Improve Sleep Quality</h3>
+                        <p>21-night program to establish healthy sleep habits and routines.</p>
+                        <div class="quest-progress">
+                            <div class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <a href="#" class="quest-btn">Start Quest</a>
+                    </div>
+                </div>
+                <div class="quest-card">
+                    <div class="quest-img">
+                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f8e1c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Grief Support">
+                    </div>
+                    <div class="quest-content">
+                        <h3>Navigating Grief</h3>
+                        <p>A compassionate 30-day guide through the grieving process.</p>
+                        <div class="quest-progress">
+                            <div class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <a href="#" class="quest-btn">Start Quest</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="emergency-tools">
+        <div class="container">
+            <div class="section-title">
+                <h2>Offline Emergency Toolkits</h2>
+                <p>Immediate support resources available even without internet connection.</p>
+            </div>
+            <div class="tools-container">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-first-aid"></i>
+                    </div>
+                    <h3>Panic Attack First Aid</h3>
+                    <p>Step-by-step guidance to help you through moments of intense anxiety or panic.</p>
+                    <a href="#" class="tool-btn">Access Toolkit</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3>Loneliness at Night</h3>
+                    <p>Comforting exercises and thoughts for when you're feeling alone during nighttime.</p>
+                    <a href="#" class="tool-btn">Access Toolkit</a>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Grounding Techniques</h3>
+                    <p>Methods to reconnect with
